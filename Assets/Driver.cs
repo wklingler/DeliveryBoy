@@ -5,10 +5,10 @@ using UnityEngine;
 public class Driver : MonoBehaviour
 {
     [SerializeField]
-    private float _steerSpeed = 1f;
+    private float _steerSpeed = 200f;
 
     [SerializeField]
-    private float _moveSpeed = 0.01f;
+    private float _moveSpeed = 10f;
 
     void Start()
     {
@@ -16,7 +16,10 @@ public class Driver : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(0, 0, _steerSpeed);
-        transform.Translate(0, _moveSpeed, 0);
+        var steerAmount = Input.GetAxis("Horizontal") * _steerSpeed * Time.deltaTime;
+        transform.Rotate(0, 0, -steerAmount);
+
+        var moveAmount = Input.GetAxis("Vertical") * _moveSpeed * Time.deltaTime;
+        transform.Translate(0, moveAmount, 0);
     }
 }
