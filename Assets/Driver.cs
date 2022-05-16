@@ -10,9 +10,11 @@ public class Driver : MonoBehaviour
     [SerializeField]
     private float _moveSpeed = 10f;
 
-    void Start()
-    {
-    }
+    [SerializeField]
+    private float _slowSpeed = 5f;
+
+    [SerializeField]
+    private float _boostSpeed = 15f;
 
     void Update()
     {
@@ -21,5 +23,18 @@ public class Driver : MonoBehaviour
 
         var moveAmount = Input.GetAxis("Vertical") * _moveSpeed * Time.deltaTime;
         transform.Translate(0, moveAmount, 0);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        _moveSpeed = _slowSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Boost")
+        {
+            _moveSpeed = _boostSpeed;
+        }
     }
 }
